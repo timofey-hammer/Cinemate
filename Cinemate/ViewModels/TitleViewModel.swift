@@ -2,7 +2,10 @@
 //  TitleViewModel.swift
 //  Cinemate
 //
-//  Created by Timofey Hammer on 14.12.2023.
-//
 
 import Foundation
+
+struct TitleViewModel {
+    let titleName: String
+    let posterURL: String
+}

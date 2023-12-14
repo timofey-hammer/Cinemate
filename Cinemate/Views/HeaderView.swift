@@ -5,7 +5,7 @@
 
 import UIKit
 
-class HeaderUIView: UIView {
+class HeaderView: UIView {
     
     private let playButton: UIButton = {
         let button = UIButton()
@@ -14,7 +14,6 @@ class HeaderUIView: UIView {
         button.layer.borderWidth = 1
         button.translatesAutoresizingMaskIntoConstraints = false
         button.layer.cornerRadius = 5
-        
         return button
     }()
     
@@ -25,7 +24,6 @@ class HeaderUIView: UIView {
         button.layer.borderWidth = 1
         button.translatesAutoresizingMaskIntoConstraints = false
         button.layer.cornerRadius = 5
-        
         return button
     }()
     
@@ -34,7 +32,6 @@ class HeaderUIView: UIView {
         imageView.contentMode = .scaleAspectFill
         imageView.clipsToBounds = true
         imageView.image = UIImage(named: "headerImage")
-        
         return imageView
     }()
     
