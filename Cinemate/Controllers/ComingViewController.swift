@@ -5,10 +5,11 @@
 
 import UIKit
 
-class UpcomingViewController: UIViewController {
+class ComingViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
+        view.backgroundColor = .systemBackground
     }
 }
