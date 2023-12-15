@@ -12,7 +12,6 @@ class ComingViewController: UIViewController {
     private let comingTableView: UITableView = {
         let tableView = UITableView()
         tableView.register(TitleTableViewCell.self, forCellReuseIdentifier: TitleTableViewCell.identifier)
-        
         return tableView
     }()
 
@@ -28,7 +27,7 @@ class ComingViewController: UIViewController {
         comingTableView.delegate = self
         comingTableView.dataSource = self
         
-        fetchComing()
+        fetchData()
     }
     
     override func viewDidLayoutSubviews() {
@@ -37,7 +36,7 @@ class ComingViewController: UIViewController {
         comingTableView.frame = view.bounds
     }
     
-    private func fetchComing() {
+    private func fetchData() {
         APICaller.shared.getComingMovies { [weak self] result in
             switch result {
             case .success(let titles):

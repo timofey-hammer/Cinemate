@@ -19,7 +19,7 @@ class HomeViewController: UIViewController {
     
     private let homeTableView: UITableView = {
         let tableView = UITableView(frame: .zero, style: .grouped)
-        table.register(CollectionViewTableViewCell.self, forCellReuseIdentifier: CollectionViewTableViewCell.identifier)
+        tableView.register(CollectionViewTableViewCell.self, forCellReuseIdentifier: CollectionViewTableViewCell.identifier)
         return tableView
     }()
 
