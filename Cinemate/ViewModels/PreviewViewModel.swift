@@ -2,7 +2,11 @@
 //  PreviewViewModel.swift
 //  Cinemate
 //
-//  Created by Timofey Hammer on 16.12.2023.
-//
 
 import Foundation
+
+struct PreviewViewModel {
+    let title: String
+    let youtubeView: VideoElement
+    let overview: String
+}

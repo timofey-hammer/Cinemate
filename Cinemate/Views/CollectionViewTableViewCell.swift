@@ -5,12 +5,17 @@
 
 import UIKit
 
+protocol CollectionViewTableViewCellDelegate: AnyObject {
+    func collectionViewTableViewCellDidTapCell(_ cell: CollectionViewTableViewCell, viewModel: PreviewViewModel)
+}
+
 class CollectionViewTableViewCell: UITableViewCell {
-    
-    private var titles: [Title] = [Title]()
     
     static let identifier = "CollectionViewTableViewCell"
     
+    private var titles: [Title] = [Title]()
+    weak var delegate: CollectionViewTableViewCellDelegate?
+        
     private let collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
@@ -44,10 +49,14 @@ class CollectionViewTableViewCell: UITableViewCell {
     
     public func configure(with titles: [Title]) {
         self.titles = titles
-        
+        ç
         DispatchQueue.main.async { [weak self] in
             self?.collectionView.reloadData()
         }
+    }
+    
+    private func downloadTitleAt(indexPath: IndexPath) {
+        
     }
 }
 
@@ -66,5 +75,40 @@ extension CollectionViewTableViewCell: UICollectionViewDataSource, UICollectionV
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return titles.count
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        collectionView.deselectItem(at: indexPath, animated: true)
+        
+        let title = titles[indexPath.row]
+        guard let titleName = title.original_title ?? title.original_name else { return }
+        
+        APICaller.shared.getMovies(with: titleName + " trailer") { [weak self] result in
+            switch result {
+            case .success(let videoElement):
+                
+                let title = self?.titles[indexPath.row]
+                guard let overview = title?.overview else { return }
+                guard let strongSelf = self else { return }
+                
+                let viewModel = PreviewViewModel(title: titleName, youtubeView: videoElement, overview: overview)
+                self?.delegate?.collectionViewTableViewCellDidTapCell(strongSelf, viewModel: viewModel)
+                
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
+        }
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, contextMenuConfigurationForItemAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {
+        let config = UIContextMenuConfiguration(identifier: nil, previewProvider: nil) { _ in
+            let downloadAction = UIAction(title: "Download", state: .off) { _ in
+                self.downloadTitleAt(indexPath: indexPath)
+            }
+            
+            return UIMenu(title: "", options: .displayInline, children: [downloadAction])
+        }
+        
+        return config
     }
 }
