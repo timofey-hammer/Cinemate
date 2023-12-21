@@ -23,6 +23,9 @@ class CollectionViewTableViewCell: UITableViewCell {
         
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.register(TitleCollectionViewCell.self, forCellWithReuseIdentifier: TitleCollectionViewCell.identifier)
+        collectionView.showsVerticalScrollIndicator = false
+        collectionView.showsHorizontalScrollIndicator = false
+        collectionView.backgroundColor = .black
         
         return collectionView
     }()
@@ -49,14 +52,21 @@ class CollectionViewTableViewCell: UITableViewCell {
     
     public func configure(with titles: [Title]) {
         self.titles = titles
-        ç
+        
         DispatchQueue.main.async { [weak self] in
             self?.collectionView.reloadData()
         }
     }
     
     private func downloadTitleAt(indexPath: IndexPath) {
-        
+        DataManager.shared.downloadTitleWith(model: titles[indexPath.row]) { result in
+            switch result {
+            case .success():
+                NotificationCenter.default.post(name: NSNotification.Name("downloaded"), object: nil)
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
+        }
     }
 }
 
@@ -69,6 +79,9 @@ extension CollectionViewTableViewCell: UICollectionViewDataSource, UICollectionV
             return UICollectionViewCell()
         }
         cell.configure(with: model)
+        
+        cell.layer.cornerRadius = 15
+        cell.clipsToBounds = true
         
         return cell
     }

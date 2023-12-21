@@ -30,8 +30,8 @@ class HeaderView: UIView {
     private let headerImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFill
+        imageView.layer.cornerRadius = 15
         imageView.clipsToBounds = true
-        imageView.image = UIImage(named: "headerImage")
         return imageView
     }()
     
@@ -78,7 +78,7 @@ class HeaderView: UIView {
         gradientLayer.colors = [UIColor.clear.cgColor, UIColor.systemBackground.cgColor]
         gradientLayer.frame = bounds
         
-        layer.addSublayer(gradientLayer)
+        headerImageView.layer.addSublayer(gradientLayer)
     }
     
     public func configure(with model: TitleViewModel) {

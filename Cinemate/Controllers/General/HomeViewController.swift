@@ -19,16 +19,24 @@ class HomeViewController: UIViewController {
     private var randomMovie: Title?
     private var headerView: HeaderView?
     
+    private let logoLabel: UILabel = {
+        let label = UILabel()
+        label.text = "Cinemate"
+        label.textColor = .white
+        label.font = .boldSystemFont(ofSize: 20)
+        return label
+    }()
+    
     private let homeTableView: UITableView = {
         let tableView = UITableView(frame: .zero, style: .grouped)
         tableView.register(CollectionViewTableViewCell.self, forCellReuseIdentifier: CollectionViewTableViewCell.identifier)
+        tableView.backgroundColor = .black
         return tableView
     }()
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        view.backgroundColor = .systemBackground
         view.addSubview(homeTableView)
         
         homeTableView.dataSource = self
@@ -37,7 +45,7 @@ class HomeViewController: UIViewController {
         congfigureNavigationBar()
         configureHeaderView()
         
-        headerView = HeaderView(frame: CGRect(x: 0, y: 0, width: view.bounds.width, height: 450))
+        headerView = HeaderView(frame: CGRect(x: 0, y: 0, width: view.bounds.width, height: UIScreen.main.bounds.height / 1.7))
         homeTableView.tableHeaderView = headerView
     }
     
@@ -48,13 +56,17 @@ class HomeViewController: UIViewController {
     }
     
     private func congfigureNavigationBar() {
-        navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "tv"), style: .done, target: self, action: nil)
+        let configuration = UIImage.SymbolConfiguration(weight: .semibold)
+        
+        navigationItem.leftBarButtonItem = UIBarButtonItem(customView: logoLabel)
         
         navigationItem.rightBarButtonItems = [
-            UIBarButtonItem(image: UIImage(systemName: "person"), style: .done, target: self, action: nil),
-            UIBarButtonItem(image: UIImage(systemName: "play.rectangle"), style: .done, target: self, action: nil)
+            UIBarButtonItem(image: UIImage(systemName: "person", withConfiguration: configuration), style: .done, target: self, action: nil),
+            UIBarButtonItem(image: UIImage(systemName: "play.rectangle", withConfiguration: configuration), style: .done, target: self, action: nil)
         ]
         navigationController?.navigationBar.tintColor = .white
+        
+        navigationController?.navigationBar.barStyle = .black
     }
     
     private func configureHeaderView() {
@@ -150,13 +162,6 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return 40
-    }
-    
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        let defaultOffseet = view.safeAreaInsets.top
-        let offset = scrollView.contentOffset.y + defaultOffseet
-        
-        navigationController?.navigationBar.transform = .init(translationX: 0, y: min(0, -offset))
     }
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {

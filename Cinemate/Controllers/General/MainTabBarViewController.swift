@@ -26,6 +26,7 @@ class MainTabBarViewController: UITabBarController {
         downloadsVC.title = "Downloads"
         
         tabBar.tintColor = .label
+        tabBar.barStyle = .black
         
         setViewControllers([homeVC, comingVC, searchVC, downloadsVC], animated: true)
     }

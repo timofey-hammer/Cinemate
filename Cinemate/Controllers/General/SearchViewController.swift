@@ -17,7 +17,7 @@ class SearchViewController: UIViewController {
     
     private let searchController: UISearchController = {
         let searchController = UISearchController(searchResultsController: SearchResultsViewController())
-        searchController.searchBar.placeholder = "Seatch for Movie or TV"
+        searchController.searchBar.placeholder = "Search for Movie or TV"
         searchController.searchBar.searchBarStyle = .minimal
         return searchController
     }()
@@ -78,7 +78,7 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 120
+        return 160
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {

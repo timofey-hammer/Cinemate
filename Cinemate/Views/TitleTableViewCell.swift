@@ -12,6 +12,8 @@ class TitleTableViewCell: UITableViewCell {
     private let titleLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
+        label.numberOfLines = 0
+        label.font = .systemFont(ofSize: 16, weight: .bold)
         return label
     }()
     
@@ -20,6 +22,7 @@ class TitleTableViewCell: UITableViewCell {
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.contentMode = .scaleAspectFill
         imageView.clipsToBounds = true
+        imageView.layer.cornerRadius = 15
         return imageView
     }()
     
@@ -56,6 +59,7 @@ class TitleTableViewCell: UITableViewCell {
         
         let titleLabelConstraints = [
             titleLabel.leadingAnchor.constraint(equalTo: titlePosterImageView.trailingAnchor, constant: 20),
+            titleLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -60),
             titleLabel.centerYAnchor.constraint(equalTo: contentView.centerYAnchor)
         ]
         
