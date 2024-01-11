@@ -48,4 +48,4 @@
 
 ## Источники
 [Youtube Trailers](https://youtube.googleapis.com/youtube) <br />
-[API]([https://bits.media](https://api.themoviedb.org)
+[API](https://api.themoviedb.org)
